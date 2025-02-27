@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\language_programmation;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class LanguageProgController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::with('user')->latest()->paginate(2);
-        return view('dashboard',["posts"=> $posts]);
-        dd($posts);
+        //
     }
 
     /**
@@ -22,7 +20,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -30,35 +28,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request-> validate([
-            'titre'=>'required|string|max:255',
-            'description'=>'required|string|max:255',
-            'image' => ['required'],
-            'tag_id'=>['required'],
-            
+        $request->validate([
+            'content' => 'required|string|max:255',
         ]);
-        
-        $imagepath = $request->file('image') ? $request->file('image')->store('posts', 'public') : null;
-        Post::create([
-         'titre'=>$request->titre,
-         'description'=>$request->description,
-         'tag_id'=>$request->tag_id,
-         'image' => $imagepath,
-         'user_id'=>auth()->user()->id,
-         'tag_id'=>1,
+        language_programmation::create([
+            'content' => $request->content,
+            'user_id' => auth()->id(),
         ]);
-       
         return redirect()->back();
     }
-  
-
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-       
+        $languageProgs = language_programmation::where('user_id', $id)->get();
+        return view('profile.edit', compact('languageProgs'));
     }
 
     /**
@@ -80,9 +66,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy( $id)
     {
-        $post->delete();
-        return redirect()->back();
-    }
+        $languageProgs = language_programmation::find($id);
+
+        $languageProgs->delete();
+        return redirect()->back();    }
 }

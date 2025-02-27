@@ -21,7 +21,6 @@ class CompetenceController extends Controller
     public function create()
     {
         return view('addCompetence');
-
     }
 
     /**
@@ -29,13 +28,12 @@ class CompetenceController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $request-> validate([
-            'content'=>'required|string|max:255',   
+        $request->validate([
+            'content' => 'required|string|max:255',
         ]);
         Competence::create([
-         'content'=>$request->content,
-         'user_id'=>auth()->id(),
+            'content' => $request->content,
+            'user_id' => auth()->id(),
         ]);
         return redirect()->back();
     }
@@ -45,8 +43,11 @@ class CompetenceController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $competences = Competence::where('user_id', $id)->get();
+        return view('profile.edit', compact('competences'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -67,8 +68,11 @@ class CompetenceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $competence = Competence::find($id);
+
+        $competence->delete();
+        return redirect()->back();
     }
 }
