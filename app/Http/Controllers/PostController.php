@@ -12,7 +12,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with('user')->latest()->paginate(2);
+        return view('dashboard',["posts"=> $posts]);
+        dd($posts);
     }
 
     /**
@@ -56,7 +58,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+       
     }
 
     /**
@@ -78,8 +80,9 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->back();
     }
 }

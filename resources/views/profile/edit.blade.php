@@ -118,15 +118,7 @@
             </div>
 
             <!-- Formulaire pour ajouter un post -->
-            <form method="POST" action="" class="mt-4">
-                @csrf
-                <div class="flex gap-2">
-                    <textarea id="post-content" name="content" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-gray-100" rows="3" placeholder="Écrivez un post..." required></textarea>
-                    <x-primary-button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md shadow-sm">
-                        {{ __('Publier') }}
-                    </x-primary-button>
-                </div>
-            </form>
+            
         </div>
     </div>
 
