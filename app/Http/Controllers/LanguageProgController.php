@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Competence;
+use App\Models\language_programmation;
 use Illuminate\Http\Request;
 
-class CompetenceController extends Controller
+class LanguageProgController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class CompetenceController extends Controller
      */
     public function create()
     {
-        return view('addCompetence');
+        
     }
 
     /**
@@ -31,7 +31,7 @@ class CompetenceController extends Controller
         $request->validate([
             'content' => 'required|string|max:255',
         ]);
-        Competence::create([
+        language_programmation::create([
             'content' => $request->content,
             'user_id' => auth()->id(),
         ]);
@@ -43,11 +43,9 @@ class CompetenceController extends Controller
      */
     public function show(string $id)
     {
-
-        $competences = Competence::where('user_id', $id)->get();
-        return view('profile.edit', compact('competences'));
+        $languageProgs = language_programmation::where('user_id', $id)->get();
+        return view('profile.edit', compact('languageProgs'));
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -68,11 +66,10 @@ class CompetenceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
-        $competence = Competence::find($id);
+        $languageProgs = language_programmation::find($id);
 
-        $competence->delete();
-        return redirect()->back();
-    }
+        $languageProgs->delete();
+        return redirect()->back();    }
 }

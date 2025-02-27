@@ -31,18 +31,25 @@ class PostController extends Controller
         $request-> validate([
             'titre'=>'required|string|max:255',
             'description'=>'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'tag_id'=>'required|exists:tags,id',
+            'image' => ['required'],
+            'tag_id'=>['required'],
             
         ]);
+        
+        $imagepath = $request->file('image') ? $request->file('image')->store('posts', 'public') : null;
         Post::create([
          'titre'=>$request->titre,
          'description'=>$request->description,
          'tag_id'=>$request->tag_id,
-         'user_id'=>auth()->id(),
+         'image' => $imagepath,
+         'user_id'=>auth()->user()->id,
+         'tag_id'=>1,
         ]);
-        return redirect()->route('');
+       
+        return redirect()->back();
     }
+  
+
 
     /**
      * Display the specified resource.
