@@ -271,6 +271,7 @@
                                 </svg>
                                 Delete
                             </button>
+                            
                         </form>
                     </div>
                 </div>
