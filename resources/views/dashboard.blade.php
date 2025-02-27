@@ -262,7 +262,7 @@
                             Edit
                         </a>
 
-                        <form action="" method="POST">
+                        <form action="{{ route('dashboard.destroy',$post->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button class="text-red-500 hover:text-red-700 flex items-center" type="submit">
