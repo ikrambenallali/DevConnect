@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommantaireController;
 use App\Http\Controllers\CompetenceController;
 use App\Http\Controllers\LanguageProgController;
 use App\Http\Controllers\PostController;
@@ -28,13 +29,12 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
-
     Route::get('/addComp', [CompetenceController::class, 'create'])->name('addComp');
     Route::delete('/compoetence/{competence}', [CompetenceController::class, 'destroy'])->name('competence.destroy');
     Route::delete('/languageProg/{languageProg}', [LanguageProgController::class, 'destroy'])->name('languageProg.destroy');
     Route::post('/ajouterCompetence', [CompetenceController::class, 'store'])->name('ajouterCompetence');
     Route::post('/ajouterLanguagePro', [LanguageProgController::class, 'store'])->name('ajouterLanguagePro');
+    Route::post('/dashboard/addComment/{post}', [CommantaireController::class, 'store'])->name('dashboard.addComment');
     Route::get('/showCompetence/{id}', [CompetenceController::class, 'show'])->name('showCompetence');
     Route::get('/showLanguage/{id}', [LanguageProgController::class, 'show'])->name('showLanguage');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
