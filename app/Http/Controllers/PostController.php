@@ -64,17 +64,35 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+
+        return view('editPost',["post" => $post]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,Post $post)
     {
-        //
+        $request->validate([
+            'titre' => ['required', 'string', 'max:255'],
+            'tag_id' => ['required'],
+            'description' => ['required']     
+        ]);
+   $ImagePath= $request->file('image') ? $request->file('image')->store('posts', 'public') : $post->image; 
+   
+    $post->update([
+    'user_id'=>auth()->id(),
+    'titre' => $request->titre,
+    'tag_id' => $request->tag_id,
+    'description' => $request->description,
+    'image' => $ImagePath,
+]);
+
+return redirect()->back();  
+    
     }
 
     /**
