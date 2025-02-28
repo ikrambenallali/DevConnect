@@ -67,13 +67,12 @@
         <div class="mt-4 space-y-4">
             <!-- Liste des compétences -->
             <div class="space-y-4">
-
+          <!--  -->
                 @if(isset($competences) && $competences->count())
                 @foreach ($competences as $competence)
                 <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
                     <span class="text-gray-900 dark:text-gray-100">{{ $competence->content }}</span>
                     <a href="{{ route('showCompetence', $competence->id) }}" class="text-blue-500 hover:text-blue-700">
-                        Voir les détails
                     </a>
                     <form action="{{route('competence.destroy', $competence->id)}}" method="POST">
                         @csrf
@@ -106,6 +105,87 @@
 
         </div>
     </div>
+    
+             <!-- Section des certification -->
+             <div class="mt-8">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ __('Certification') }}</h3>
+        <div class="mt-4 space-y-4">
+            <!-- Liste des Certifications -->
+            <div class="space-y-4">
+
+                @if(isset($certfications) && $certfications->count())
+                @foreach ($certfications as $certfication)
+                <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                    <span class="text-gray-900 dark:text-gray-100">{{ $certfication->content }}</span>
+                    <a href="{{ route('showCertification', $certfication->id) }}" class="text-blue-500 hover:text-blue-700">
+                    </a>
+                    <form action="{{route('certfication.destroy', $certfication->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 hover:text-red-700">
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+                @endforeach
+                @else
+                <p>No competences found.</p>
+                @endif
+
+            </div>
+            <!-- form ajouter certification  -->
+            <form action="{{ route('addCertification') }}" method="POST" class="mt-4">
+                @csrf
+                <div class="mb-4">
+                    <label for="nom" class="block text-sm font-medium text-gray-700">Nom </label>
+                    <input type="text" id="content" name="content" required
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-gray-100" placeholder="Ajouter une compétence">
+                </div>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md shadow-sm">
+                    Add
+                </button>
+            </form>
+
+  <!-- Section des projets -->
+  <div class="mt-8">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ __('Projets') }}</h3>
+        <div class="mt-4 space-y-4">
+            <!-- Liste des projet -->
+            <div class="space-y-4">
+
+                @if(isset($projets) && $projets->count())
+                @foreach ($projets as $projet)
+                <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                    <span class="text-gray-900 dark:text-gray-100">{{ $projet->content }}</span>
+                    <a href="{{ route('showProjet', $projet->id) }}" class="text-blue-500 hover:text-blue-700">
+                    </a>
+                    <form action="{{route('projet.destroy', $projet->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 hover:text-red-700">
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+                @endforeach
+                @else
+                <p>No competences found.</p>
+                @endif
+
+            </div>
+            <!-- form ajouter projet  -->
+            <form action="{{ route('addProjet') }}" method="POST" class="mt-4">
+                @csrf
+                <div class="mb-4">
+                    <label for="nom" class="block text-sm font-medium text-gray-700">Nom </label>
+                    <input type="text" id="content" name="content" required
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-gray-100" placeholder="Ajouter une compétence">
+                </div>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md shadow-sm">
+                    Add
+                </button>
+            </form>
+
 
     <!-- Section des posts -->
     <div class="mt-8">
@@ -132,7 +212,6 @@
                 <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
                     <span class="text-gray-900 dark:text-gray-100">{{ $languageProg->content }}</span>
                     <a href="{{ route('showLanguage', $languageProg->id) }}" class="text-blue-500 hover:text-blue-700">
-                        Voir les détails
                     </a>
                     <form action="{{ route('languageProg.destroy',$languageProg->id) }}" method="POST">
                         @csrf
