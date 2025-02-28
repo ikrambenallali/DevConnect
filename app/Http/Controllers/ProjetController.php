@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Projet;
 use Illuminate\Http\Request;
 
 class ProjetController extends Controller
@@ -27,7 +28,14 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
+        Projet::create([
+            'content' => $request->content,
+            'user_id' => auth()->id(),
+        ]);
+        return redirect()->back();
     }
 
     /**
@@ -35,7 +43,8 @@ class ProjetController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $projets = Projet::where('user_id', $id)->get();
+        return view('profile.edit', compact('projets'));
     }
 
     /**
@@ -59,6 +68,9 @@ class ProjetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $projet = Projet::find($id);
+
+        $projet->delete();
+        return redirect()->back();
     }
 }

@@ -12,4 +12,6 @@ class Projet extends Model
         'content',
         'user_id',
     ];
+    protected $table = 'projet'; 
+
 }

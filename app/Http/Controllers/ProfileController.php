@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Certification;
 use App\Models\Competence;
 use App\Models\language_programmation;
+use App\Models\Projet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,11 +23,13 @@ class ProfileController extends Controller
         $competences = Competence::where('user_id', $request->user()->id)->get();
         $languageProgs = language_programmation::where('user_id', $request->user()->id)->get();
         $certfications = Certification::where('user_id', $request->user()->id)->get();
+        $projets = Projet::where('user_id', $request->user()->id)->get();
         return view('profile.edit', [
             'user' => $request->user(),
             'competences' => $competences,
             'languageProgs' => $languageProgs,
-            'certfications' => $certfications
+            'certfications' => $certfications,
+            'projets' => $projets
 
         ]);
     }
