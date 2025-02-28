@@ -67,7 +67,7 @@
         <div class="mt-4 space-y-4">
             <!-- Liste des compétences -->
             <div class="space-y-4">
-
+          <!--  -->
                 @if(isset($competences) && $competences->count())
                 @foreach ($competences as $competence)
                 <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
