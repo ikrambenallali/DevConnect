@@ -14,10 +14,10 @@ class CommantaireController extends Controller
             'content' => 'required|min:3|string'
         ]);
 
-        $comment = new Commantaire($user_comment);
-        $comment->user_id = auth()->id();
-        $comment->post_id = $post->id;
-        $comment->save();
+        $comments = new Commantaire($user_comment);
+        $comments->user_id = auth()->id();
+        $comments->post_id = $post->id;
+        $comments->save();
         return redirect()->back();
 
         
