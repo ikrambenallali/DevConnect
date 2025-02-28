@@ -4,6 +4,7 @@ use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\CommantaireController;
 use App\Http\Controllers\CompetenceController;
 use App\Http\Controllers\LanguageProgController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetController;
@@ -52,8 +53,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/editPost/{post}', [PostController::class, 'edit'])->name('editPost');
     Route::put('/updatePost/{post}', [PostController::class, 'update'])->name('updatePost');
     Route::delete('/dashboard/{post}', [PostController::class, 'destroy'])->name('dashboard.destroy');
+    
 
 
+});
+Route::middleware('api')->group(function () {
+    Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->name('posts.like');
 });
 
 require __DIR__ . '/auth.php';

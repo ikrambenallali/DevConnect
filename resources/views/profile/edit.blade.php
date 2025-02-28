@@ -150,7 +150,7 @@
   <div class="mt-8">
         <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ __('Projets') }}</h3>
         <div class="mt-4 space-y-4">
-            <!-- Liste des projet -->
+            <!-- Liste des projet realiser-->
             <div class="space-y-4">
 
                 @if(isset($projets) && $projets->count())
