@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Competence;
+use App\Models\language_programmation;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
+use Carbon\Language;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,9 +17,10 @@ class PostController extends Controller
      */
     public function index()
     {
+        $languageProgs = language_programmation::where('user_id', auth()->id())->get();
+        $users = User::where('id', '!=', auth()->id())->get();
         $posts = Post::with('user')->latest()->paginate(2);
-        return view('dashboard', ["posts" => $posts]);
-        dd($posts);
+        return view('dashboard', ["posts" => $posts], ["users" => $users],["languageProgs" => $languageProgs]);
     }
 
     /**
