@@ -3,11 +3,13 @@
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\CommantaireController;
 use App\Http\Controllers\CompetenceController;
+use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\LanguageProgController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,12 +27,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/addComp', [CompetenceController::class, 'create'])->name('addComp');
     Route::delete('/compoetence/{competence}', [CompetenceController::class, 'destroy'])->name('competence.destroy');
@@ -45,6 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/showCompetence/{id}', [CompetenceController::class, 'show'])->name('showCompetence');
     Route::get('/showCertification/{id}', [CertificationController::class, 'show'])->name('showCertification');
     Route::get('/showProjet/{id}', [ProjetController::class, 'show'])->name('showProjet');
+    Route::get('/showUsers', [UserController::class, 'index'])->name('showUsers');
+    Route::get('/showLangues', [LanguageProgController::class, 'show'])->name('showLangues');
+    // Route::get('/showUser', [UserController::class, 'aa'])->name('showUser');
     Route::get('/showLanguage/{id}', [LanguageProgController::class, 'show'])->name('showLanguage');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -55,10 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/{post}', [PostController::class, 'destroy'])->name('dashboard.destroy');
     
 
+    
+
 
 });
 Route::middleware('api')->group(function () {
     Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->name('posts.like');
+    Route::post('/users/{user}/connection', [ConnectionController::class, 'connect'])->name('connect');
 });
 
 require __DIR__ . '/auth.php';
