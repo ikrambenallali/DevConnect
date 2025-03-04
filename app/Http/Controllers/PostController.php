@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Competence;
+use App\Models\Connection;
 use App\Models\language_programmation;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
-use Carbon\Language;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -19,8 +18,13 @@ class PostController extends Controller
     {
         $languageProgs = language_programmation::where('user_id', auth()->id())->get();
         $users = User::where('id', '!=', auth()->id())->get();
+        foreach ($users as $user) {
+            $status = Connection::getConnectionStatus($user->id, auth()->user()->id);
+            $user->connectionStatus = $status;
+        }
+
         $posts = Post::with('user')->latest()->paginate(2);
-        return view('dashboard', ["posts" => $posts], ["users" => $users],["languageProgs" => $languageProgs]);
+        return view('dashboard', ["posts" => $posts], ["users" => $users], ["languageProgs" => $languageProgs]);
     }
 
     /**
@@ -43,7 +47,7 @@ class PostController extends Controller
             'image' => ['required'],
             'tags' => 'required|string',
         ]);
-        
+
         $tagsArray = array_filter(explode('#', ltrim($request->tags, '#')));
         $imagepath = $request->file('image') ? $request->file('image')->store('posts', 'public') : null;
         $post = Post::create([

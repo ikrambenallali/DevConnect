@@ -51,32 +51,28 @@
                     <div class="space-y-4">
                         <div class=" items-center justify-between">
                             @foreach($users as $user)
-                            <div class=" items-center space-x-3">
-                                <img src="https://avatar.iran.liara.run/public/boy" alt="User" class="w-10 h-10 rounded-full" />
+                            <div class="flex items-center space-x-3" id="user-{{ $user->id }}">
+                                <img src=" https://avatar.iran.liara.run/public/boy" alt="User" class="w-10 h-10 rounded-full" />
                                 <div>
-                                <a href="{{ route('showUsers') }}" class="text-blue-500 hover:text-blue-700">
-                                </a>
+                                    <a href="{{ route('showUsers') }}" class="text-blue-500 hover:text-blue-700">
+                                    </a>
                                     <h4 class="font-medium">{{ $user->name}}</h4>
-                                  
+
                                 </div>
+                                @if ($user->connectionStatus === 'accepter')
+                                    <a href="" class="text-blue-500 hover:text-blue-600">Message</a>
+                                    @elseif ($user->connectionStatus === 'en attente')
+                                    <span class="text-blue-500 hover:text-blue-600">en attente</span>
+                                    @else
+                                    <button onclick="connect('{{$user->id}}')" class="text-blue-500 hover:text-blue-600 connect-btn">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                        </svg>
+                                    </button>
+                                @endif
+
                             </div>
-                            @if ($user->connectionStatus)
-            @if ($user->connectionStatus == 'accepter')
-            <a href=""
-                class="text-blue-500 hover:text-blue-600">
-                Message
-            </a>
-            @elseif ($user->connectionStatus == 'en attente')
-            <span class="text-blue-500 hover:text-blue-600">en attente </span>
-            @endif
-            @else
-            <button
-                onclick="connect('{{$user->id}}')"
-                class="text-blue-500 hover:text-blue-600 connect-btn">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-    </svg>            </button>
-            @endif
+
                             @endforeach
                         </div>
                     </div>
@@ -395,10 +391,18 @@
 
                 </div>
 
-                <script>
-                     async function connect(userId) {   
+                <!-- </body>
+
+    </html> -->
+
+
+
+</x-app-layout>
+
+<script>
+    async function connect(userId) {
         try {
-            const response = await fetch(`/connect/${userId}`, {
+            const response = await fetch(`/users/${userId}/connection`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -409,17 +413,23 @@
             const data = await response.json();
 
             if (data.success) {
+                console.log('success');
+
                 const userElement = document.getElementById(`user-${userId}`);
+                console.log(userElement);
+
 
                 if (userElement) {
                     const button = userElement.querySelector('.connect-btn');
+                    console.log(button);
+
                     if (button) {
                         button.remove();
                     }
 
                     const pendingText = document.createElement('span');
                     pendingText.className = "text-blue-500 hover:text-blue-600";
-                    pendingText.textContent = "Pending";
+                    pendingText.textContent = "en attente";
                     userElement.appendChild(pendingText);
                 }
             }
@@ -427,75 +437,68 @@
             console.error('Error Connecting:', error);
         }
     }
-                    
-                    function likePost(postId) {
-                        fetch(`/posts/${ 
+
+    function likePost(postId) {
+        fetch(`/posts/${ 
                                 postId
                             }
                             /like`, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                        })
-                    .then(response => response.json())
-                        .then(data => {
-                            const likeButton = document.getElementById(`like-button-${postId}`);
-                            const likeCount = likeButton.querySelector('span');
-                            likeCount.textContent = data.count + (data.count !== 1 ? ' Likes' : ' Like');
-                            // likeButton.classList.add('text-blue-500');
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                const likeButton = document.getElementById(`like-button-${postId}`);
+                const likeCount = likeButton.querySelector('span');
+                likeCount.textContent = data.count + (data.count !== 1 ? ' Likes' : ' Like');
+                // likeButton.classList.add('text-blue-500');
 
 
-                            if (data.liked) {
-                                likeButton.classList.add('text-blue-500');
-                                likeButton.classList.remove('text-gray-400');
-                            } else {
-                                likeButton.classList.add('text-gray-400');
-                                likeButton.classList.remove('text-blue-500');
-                            }
-                        });
+                if (data.liked) {
+                    likeButton.classList.add('text-blue-500');
+                    likeButton.classList.remove('text-gray-400');
+                } else {
+                    likeButton.classList.add('text-gray-400');
+                    likeButton.classList.remove('text-blue-500');
+                }
+            });
+    }
+    // Add Post Form
+    const addpostButton = document.getElementById('addpostButton');
+    const addpostform = document.getElementById('addpostform');
+    addpostButton.addEventListener('click', function() {
+        addpostform.classList.remove('hidden')
+    })
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const previewImage = document.getElementById('preview-image');
+        const removeImage = document.getElementById('remove-image');
+
+        imageUpload.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                if (file.type.match('image.*')) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
                     }
-                    // Add Post Form
-                    const addpostButton = document.getElementById('addpostButton');
-                    const addpostform = document.getElementById('addpostform');
-                    addpostButton.addEventListener('click', function() {
-                        addpostform.classList.remove('hidden')
-                    })
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const imageUpload = document.getElementById('image-upload');
-                        const imagePreview = document.getElementById('image-preview');
-                        const previewImage = document.getElementById('preview-image');
-                        const removeImage = document.getElementById('remove-image');
 
-                        imageUpload.addEventListener('change', function(e) {
-                            if (e.target.files.length > 0) {
-                                const file = e.target.files[0];
-                                if (file.type.match('image.*')) {
-                                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
 
-                                    reader.onload = function(e) {
-                                        previewImage.src = e.target.result;
-                                        imagePreview.classList.remove('hidden');
-                                    }
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }
-                        });
-
-                        removeImage.addEventListener('click', function() {
-                            imageUpload.value = '';
-                            imagePreview.classList.add('hidden');
-                            previewImage.src = '#';
-                        });
-                    });
-                </script>
-                <!-- </body>
-
-    </html> -->
-
-
-
-</x-app-layout>
+        removeImage.addEventListener('click', function() {
+            imageUpload.value = '';
+            imagePreview.classList.add('hidden');
+            previewImage.src = '#';
+        });
+    });
+</script>
