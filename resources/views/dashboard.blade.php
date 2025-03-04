@@ -33,8 +33,8 @@
                         </div>
                         <div class="mt-4 pt-4 border-t">
                             <div class="flex justify-between text-sm">
-                                <span class="text-gray-500">Connections</span>
-                                <span class="text-blue-600 font-medium">487</span>
+                                <a href="{{ route('connections') }}" class="text-gray-500">Connections</a>
+                                <span class="text-blue-600 font-medium">{{ $connections->count()}}</span>
                             </div>
                             <div class="flex justify-between text-sm mt-2">
                                 <span class="text-gray-500">Posts</span>
