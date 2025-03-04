@@ -18,13 +18,14 @@ class PostController extends Controller
     {
         $languageProgs = language_programmation::where('user_id', auth()->id())->get();
         $users = User::where('id', '!=', auth()->id())->get();
+        $connections = Connection::with('user')->where('status', 'accepter')->get();
         foreach ($users as $user) {
             $status = Connection::getConnectionStatus($user->id, auth()->user()->id);
             $user->connectionStatus = $status;
         }
 
         $posts = Post::with('user')->latest()->paginate(2);
-        return view('dashboard', ["posts" => $posts], ["users" => $users], ["languageProgs" => $languageProgs]);
+        return view('dashboard',  compact('posts', 'users', 'languageProgs', 'connections'));
     }
 
     /**

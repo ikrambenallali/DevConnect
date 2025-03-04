@@ -16,5 +16,11 @@ class ConnectionController extends Controller
             'success' => true,
         ]);
     }
-
+    public function accepter(User $user) {}
+    public function index()
+    {
+        $connections = auth()->user()->connections;
+        // dd($connections);
+        return view('listeConnections', compact('connections'));
+    }
 }

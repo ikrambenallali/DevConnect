@@ -70,6 +70,7 @@ Route::middleware('api')->group(function () {
     Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->name('posts.like');
     Route::post('/users/{user}/connection', [ConnectionController::class, 'connect'])->name('connect');
 });
+Route::get('/connections', [ConnectionController::class, 'index'])->middleware('auth')->name('connections');
 
 require __DIR__ . '/auth.php';
     
