@@ -262,11 +262,11 @@
               document.getElementById('profile_picture').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
-        const reader = new FileReader(); // Crée un lecteur de fichier pour afficher l'aperçu
+        const reader = new FileReader(); 
         reader.onload = function(e) {
             const image = document.getElementById('profileImage');
-            image.src = e.target.result; // Affiche l'image choisie comme prévisualisation
-            image.classList.add('border-green-500'); // Change la bordure en vert pour indiquer l'image chargée
+            image.src = e.target.result; 
+            image.classList.add('border-green-500'); 
         };
         reader.readAsDataURL(file); // Lit le fichier comme une URL
     }
