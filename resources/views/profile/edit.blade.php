@@ -9,6 +9,23 @@
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
+    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
+    @csrf
+    @method('patch')
+
+    <!-- Champ pour l'image de profil -->
+    <div>
+        <label for="profile_picture" class="block text-sm font-medium text-gray-700">Photo de profil</label>
+        <input type="file" id="profile_picture" name="profile_picture" class="mt-1 block w-full" />
+        <x-input-error class="mt-2 text-sm text-red-600 dark:text-red-400" :messages="$errors->get('profile_picture')" />
+    </div>
+    <div class="flex items-center gap-4">
+        <x-primary-button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md shadow-sm">
+            {{ __('Mettre à jour') }}
+        </x-primary-button>
+    </div>
+    </form>
+<input type="file" id="profile_picture" name="profile_picture" class="hidden" accept="image/*">
 
     <!-- Formulaire de mise à jour du profil -->
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
@@ -241,4 +258,19 @@
 
         </div>
     </div>
+    <script>
+              document.getElementById('profile_picture').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader(); // Crée un lecteur de fichier pour afficher l'aperçu
+        reader.onload = function(e) {
+            const image = document.getElementById('profileImage');
+            image.src = e.target.result; // Affiche l'image choisie comme prévisualisation
+            image.classList.add('border-green-500'); // Change la bordure en vert pour indiquer l'image chargée
+        };
+        reader.readAsDataURL(file); // Lit le fichier comme une URL
+    }
+});
+
+    </script>
 </section>

@@ -31,9 +31,11 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function mesPosts()
     {
-        //
+        $posts = Post::where('user_id', auth()->id())->get();
+        return view('allPosts', compact('posts'));
+
     }
 
     /**
@@ -41,6 +43,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
+        
+        
         // dd($request->all());
         $request->validate([
             'titre' => 'required|string|max:255',
@@ -48,14 +53,18 @@ class PostController extends Controller
             'image' => ['required'],
             'tags' => 'required|string',
         ]);
+       
+        // dd(auth()->user());
 
         $tagsArray = array_filter(explode('#', ltrim($request->tags, '#')));
         $imagepath = $request->file('image') ? $request->file('image')->store('posts', 'public') : null;
+        
         $post = Post::create([
             'titre' => $request->titre,
             'description' => $request->description,
             'image' => $imagepath,
             'user_id' => auth()->user()->id,
+
         ]);
 
         $tagIds = [];

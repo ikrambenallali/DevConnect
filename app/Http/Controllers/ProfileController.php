@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -33,6 +34,33 @@ class ProfileController extends Controller
 
         ]);
     }
+    public function updateProfilePicture(Request $request)
+{
+    // Valider la requête pour l'image de profil uniquement
+    $request->validate([
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',  // Validation pour l'image
+    ]);
+
+    $user = Auth::user();
+    
+    // Vérifiez si une image a été téléchargée
+    if ($request->hasFile('profile_picture')) {
+        // Supprimer l'ancienne image de profil, si elle existe
+        if ($user->profile_picture) {
+            Storage::delete('public/' . $user->profile_picture);
+        }
+
+        // Enregistrez la nouvelle image
+        $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+
+        // Mettez à jour le chemin de l'image de profil dans la base de données
+        $user->profile_picture = $imagePath;
+        $user->save();
+    }
+
+    return redirect()->route('profile.edit')->with('status', 'Photo de profil mise à jour avec succès.');
+}
+
 
     /**
      * Update the user's profile information.

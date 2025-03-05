@@ -10,9 +10,10 @@
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                     <div class="relative">
                         <div class="h-24 bg-gradient-to-r from-blue-600 to-blue-400"></div>
-                        <img src="https://avatar.iran.liara.run/public/boy" alt="Profile"
+                        <img src="{{ asset('storage/' . (Auth::user()->profile_picture ?? 'images/placeholder.jpg')) }}" alt="Profile"
                             class="absolute -bottom-6 left-4 w-20 h-20 rounded-full border-4 border-white shadow-md" />
                     </div>
+
                     <div class="pt-14 p-4">
                         <div class="flex items-center justify-between">
                             <h2 class="text-xl font-bold">{{ auth()->user()->name }}</h2>
@@ -24,20 +25,18 @@
                         </div>
                         <p class="text-gray-600 text-sm mt-1">Senior Full Stack Developer</p>
                         <p class="text-gray-500 text-sm mt-2">Building scalable web applications with modern technologies</p>
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs"></span>
-                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Node.js</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">React</span>
-                            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">Python</span>
-                            <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Docker</span>
+                        @foreach($languageProgs as $languageProg)
+                        <div class="flex mt-2">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">{{ $languageProg->content }}</span>
                         </div>
+                        @endforeach
                         <div class="mt-4 pt-4 border-t">
                             <div class="flex justify-between text-sm">
                                 <a href="{{ route('connections') }}" class="text-gray-500">Connections</a>
                                 <span class="text-blue-600 font-medium">{{ $connections->count()}}</span>
                             </div>
                             <div class="flex justify-between text-sm mt-2">
-                                <span class="text-gray-500">Posts</span>
+                                <a href="{{ route('posts') }}" class="text-gray-500">Posts</a>
                                 <span class="text-blue-600 font-medium">{{ $posts->count()}}</span>
                             </div>
                         </div>
@@ -60,15 +59,15 @@
 
                                 </div>
                                 @if ($user->connectionStatus === 'accepter')
-                                    <a href="" class="text-blue-500 hover:text-blue-600">Message</a>
-                                    @elseif ($user->connectionStatus === 'en attente')
-                                    <span class="text-blue-500 hover:text-blue-600">en attente</span>
-                                    @else
-                                    <button onclick="connect('{{$user->id}}')" class="text-blue-500 hover:text-blue-600 connect-btn">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                        </svg>
-                                    </button>
+                                <a href="" class="text-blue-500 hover:text-blue-600">Message</a>
+                                @elseif ($user->connectionStatus === 'en attente')
+                                <span class="text-blue-500 hover:text-blue-600">en attente</span>
+                                @else
+                                <button onclick="connect('{{$user->id}}')" class="text-blue-500 hover:text-blue-600 connect-btn">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </button>
                                 @endif
 
                             </div>
