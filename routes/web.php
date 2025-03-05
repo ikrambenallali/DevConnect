@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/editPost/{post}', [PostController::class, 'edit'])->name('editPost');
     Route::put('/updatePost/{post}', [PostController::class, 'update'])->name('updatePost');
     Route::delete('/dashboard/{post}', [PostController::class, 'destroy'])->name('dashboard.destroy');
+    // Route::patch('/profile/update', [ProfileController::class, 'updateProfilePicture'])->name('profile.update');
+
     
 
     
@@ -71,6 +73,7 @@ Route::middleware('api')->group(function () {
     Route::post('/users/{user}/connection', [ConnectionController::class, 'connect'])->name('connect');
 });
 Route::get('/connections', [ConnectionController::class, 'index'])->middleware('auth')->name('connections');
+Route::get('/posts', [PostController::class, 'mesPosts'])->middleware('auth')->name('posts');
 
 require __DIR__ . '/auth.php';
     
