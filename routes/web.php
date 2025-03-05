@@ -58,9 +58,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/addPost', [PostController::class, 'store'])->name('dashboard.addPost');
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
     Route::get('/editPost/{post}', [PostController::class, 'edit'])->name('editPost');
+    Route::get('/profil', [PostController::class, 'profil'])->name('profil');
+    Route::get('/profilPosts', [PostController::class, 'show'])->name('profilPosts');
+    Route::get('/profile.edit', [PostController::class, 'ediit'])->name('profile.edit');
     Route::put('/updatePost/{post}', [PostController::class, 'update'])->name('updatePost');
     Route::delete('/dashboard/{post}', [PostController::class, 'destroy'])->name('dashboard.destroy');
-    // Route::patch('/profile/update', [ProfileController::class, 'updateProfilePicture'])->name('profile.update');
+    Route::patch('/profile/update', [ProfileController::class, 'updateProfilePicture'])->name('profile.update');
 
     
 

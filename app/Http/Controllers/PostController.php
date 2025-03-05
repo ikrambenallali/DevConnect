@@ -83,7 +83,13 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
+    public function show()
+     {
+        $posts = Post::where('user_id', auth()->id())->get();
+        // dd($posts);
+        return view('profil', compact('posts'));
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -124,5 +130,13 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->back();
+    }
+    public function profil(User $user)
+    {
+        return view('profil', ["user" => $user]);
+    }
+    public function ediit(User $user)
+    {
+        return view('profile.edit', ["user" => $user]);
     }
 }
