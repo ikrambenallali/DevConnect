@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Commantaire;
 use App\Models\Post;
+use App\Notifications\CommentNotification;
 use Illuminate\Http\Request;
 
 class CommantaireController extends Controller
 {
-    public function store(Request $request,Post $post){
-        
+    public function store(Request $request, Post $post)
+    {
         $user_comment = $request->validate([
             'content' => 'required|min:3|string'
         ]);
@@ -18,9 +19,8 @@ class CommantaireController extends Controller
         $comments->user_id = auth()->id();
         $comments->post_id = $post->id;
         $comments->save();
+        $post->user->notify(new CommentNotification($comments));
+        // dd(auth()->user()->notifications);
         return redirect()->back();
-
-        
-
     }
 }
