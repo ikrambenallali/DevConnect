@@ -462,7 +462,7 @@
 @php
 $userId = auth()->check() ? auth()->user()->id:0;
 @endphp  
-console.log("yes is me" ,{{$userId}});
+console.log("yes is meeeeeeeeeee" ,{{$userId}});
 
 Pusher.logToConsole = true;
 
@@ -474,16 +474,10 @@ var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
 var channel = pusher.subscribe('my-channel');
 
 // Listen for the broadcasted event
-channel.bind('App\\Notifications\\CommentNotification', function(data) {
-    console.log(data);
-    alert(data.content);
+channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {
+    console.log("my data",data);
+    alert(data.user_name);
 
-    // Check if 'comment' exists in the data
-    if (data.content) {
-        alert(data.content);
-    } else {
-        alert('No comment found in the data!');
-    }
 });
 
 </script>
