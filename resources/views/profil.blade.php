@@ -22,20 +22,26 @@
             <div class="grid grid-cols-2 gap-4 ">
                 <div class=" bg-blue-100 rounded-lg shadow-md p-4 text-center">
                     <h3 class="text-xl font-semibold text-gray-800">Compétences</h3>
+                    @foreach($competences as $competence)
+
                     <ul class="mt-2">
-                        <li class="text-gray-600">HTML</li>
-                        <li class="text-gray-600">CSS</li>
-                        <li class="text-gray-600">JavaScript</li>
+                        <li class="text-gray-600">{{$competence->content}}</li>
+                       
                     </ul>
+                    @endforeach
+
                 </div>
-                <div class=" bg-blue-100 rounded-lg shadow-md p-4 text-center">
-                    <h3 class="text-xl font-semibold text-gray-800">Languages de Programmation</h3>
-                    <ul class="mt-2">
-                        <li class="text-gray-600">Dart</li>
-                        <li class="text-gray-600">C++</li>
-                        <li class="text-gray-600">Python</li>
-                    </ul>
-                </div>
+    <div class="bg-blue-100 rounded-lg shadow-md p-4 text-center">
+        <h3 class="text-xl font-semibold text-gray-800">Languages de Programmation</h3>
+        @foreach($languageProgs as $languageProg)
+
+        <ul class="mt-2">
+            <li class="text-gray-600">{{$languageProg->content}}</li>
+        </ul>
+        @endforeach
+
+    </div>
+
               
             </div>
         </div>

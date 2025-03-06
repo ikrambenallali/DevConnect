@@ -50,10 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/addProjet', [ProjetController::class, 'store'])->name('addProjet');
     Route::post('/dashboard/addComment/{post}', [CommantaireController::class, 'store'])->name('dashboard.addComment');
     Route::get('/showCompetence/{id}', [CompetenceController::class, 'show'])->name('showCompetence');
+    // Route::get('/showCompetences/{id}', [CompetenceController::class, 'showw'])->name('show.profil');
     Route::get('/showCertification/{id}', [CertificationController::class, 'show'])->name('showCertification');
     Route::get('/showProjet/{id}', [ProjetController::class, 'show'])->name('showProjet');
     Route::get('/showUsers', [UserController::class, 'index'])->name('showUsers');
     Route::get('/showLangues', [LanguageProgController::class, 'show'])->name('showLangues');
+    Route::get('/afficherLangues', [LanguageProgController::class, 'afficher'])->name('afficherLangues');
     // Route::get('/showUser', [UserController::class, 'aa'])->name('showUser');
     Route::get('/showLanguage/{id}', [LanguageProgController::class, 'show'])->name('showLanguage');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -61,7 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/addPost', [PostController::class, 'store'])->name('dashboard.addPost');
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
     Route::get('/editPost/{post}', [PostController::class, 'edit'])->name('editPost');
-    Route::get('/profil', [PostController::class, 'profil'])->name('profil');
+    Route::get('/profil/{id}', [PostController::class, 'profil'])->name('profil');
+
     Route::get('/profilPosts', [PostController::class, 'show'])->name('profilPosts');
     Route::get('/profile.edit', [PostController::class, 'ediit'])->name('profile.edit');
     Route::put('/updatePost/{post}', [PostController::class, 'update'])->name('updatePost');

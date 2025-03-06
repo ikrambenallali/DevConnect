@@ -46,6 +46,11 @@ class LanguageProgController extends Controller
         $languageProgs = language_programmation::where('user_id', $id)->get();
         return view('profile.edit', compact('languageProgs'));
     }
+    public function afficher(string $id)
+    {
+        $languageProgs = language_programmation::where('user_id', $id)->get();
+        return view('profil', compact('languageProgs'));
+    }
 
     /**
      * Show the form for editing the specified resource.

@@ -1,51 +1,50 @@
 <x-app-layout>
 
-<nav class="fixed top-0 w-full bg-gray-900 text-white z-50">
+    <nav class="fixed top-0 w-full bg-gray-900 text-white z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-4">
                     <div class="text-2xl font-bold text-blue-400">&lt;DevConnect/&gt;</div>
                     <div class="relative">
-                        <input type="text" 
-                               placeholder="Search developers, posts, or #tags" 
-                               class="bg-gray-800 pl-10 pr-4 py-2 rounded-lg w-96 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700 transition-all duration-200"
-                        >
+                        <input type="text"
+                            placeholder="Search developers, posts, or #tags"
+                            class="bg-gray-800 pl-10 pr-4 py-2 rounded-lg w-96 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700 transition-all duration-200">
                         <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
                 </div>
-                
+
                 <div class="flex items-center space-x-6">
                     <a href="#" class="flex items-center space-x-1 hover:text-blue-400">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
                     </a>
                     <a href="#" class="flex items-center space-x-1 hover:text-blue-400">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                         </svg>
                         <span class="bg-blue-500 rounded-full w-2 h-2"></span>
                     </a>
                     <a href="#" class="flex items-center space-x-1 hover:text-blue-400">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                         <span class="bg-red-500 rounded-full w-2 h-2"></span>
                     </a>
                     <div class="h-8 w-8 rounded-full overflow-hidden">
-                    <img src="{{ asset('storage/' . (Auth::user()->profile_picture ?? 'images/placeholder.jpg')) }}" alt="Profile">
+                        <img src="{{ asset('storage/' . (Auth::user()->profile_picture ?? 'images/placeholder.jpg')) }}" alt="Profile">
                     </div>
                     <form class="bg-white text-black rounded-md" method="POST" action="{{ route('logout') }}">
-                            @csrf
+                        @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                        <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
+                            {{ __('Log Out') }}
+                        </x-dropdown-link>
+                    </form>
                 </div>
             </div>
         </div>
@@ -66,8 +65,8 @@
 
                     <div class="pt-14 p-4">
                         <div class="flex items-center justify-between">
-                            <a href="{{ route('profil') }}" class="text-xl font-bold">{{ auth()->user()->name }}</a>
-                            <a href="https://github.com" target="_blank" class="text-gray-600 hover:text-black">
+                        <a href="{{ route('profil', ['user' => auth()->user()->name, 'id' => auth()->user()->id]) }}" class="text-xl font-bold">{{ auth()->user()->name }}</a>
+                        <a href="https://github.com" target="_blank" class="text-gray-600 hover:text-black">
                                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                 </svg>
@@ -101,8 +100,8 @@
                         <div class=" items-center justify-between">
                             @foreach($users as $user)
                             <div class="flex items-center space-x-3" id="user-{{ $user->id }}">
-                            <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
-                            <div>
+                                <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
+                                <div>
                                     <a href="{{ route('showUsers') }}" class="text-blue-500 hover:text-blue-700">
                                     </a>
                                     <h4 class="font-medium">{{ $user->name}}</h4>
@@ -134,8 +133,8 @@
                 <!-- Post Creation -->
                 <div class="bg-white rounded-xl shadow-sm p-4">
                     <div class="flex items-center space-x-4">
-                    <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
-                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-500 text-left rounded-lg px-4 py-3 flex-grow transition-colors duration-200" id="addpostButton">
+                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-500 text-left rounded-lg px-4 py-3 flex-grow transition-colors duration-200" id="addpostButton">
                             Share your knowledge or ask a question...
                         </button>
 
@@ -293,7 +292,7 @@
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center">
                                 <div class="w-12 h-12 bg-gray-300 rounded-full">
-                                <img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
+                                    <img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
 
                                 </div>
                                 <div class="ml-4">
@@ -385,7 +384,7 @@
                                 @csrf
                                 <div class="flex items-start space-x-4">
                                     <div class=" bg-gray-300 rounded-full">
-                                    <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
+                                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
 
                                     </div>
 
@@ -406,7 +405,7 @@
 
                                 <div class="flex items-start space-x-4">
                                     <div class=" bg-gray-300 rounded-full">
-                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
+                                        <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover">
 
                                     </div>
                                     <div class="flex-1">
@@ -502,121 +501,121 @@
                                 postId
                             }
                             /like`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-   
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    onst removeImage = document.getElementById('remove-image');
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
 
-        imageUpload.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                const file = e.target.files[0];
-                if (file.type.match('image.*')) {
-                    const reader = new FileReader();
 
-                    reader.onload = function(e) {
-                        previewImage.src = e.target.result;
-                        imagePreview.classList.remove('hidden');
-                    }
 
-                    reader.readAsDataURL(file);
-                }
-            }
-        });
 
-        removeImage.addEventListener('click', function() {
-            imageUpload.value = '';
-            imagePreview.classList.add('hidden');
-            previewImage.src = '#';
-        });
-    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        onst removeImage = document.getElementById('remove-image');
+
+                        imageUpload.addEventListener('change', function(e) {
+                            if (e.target.files.length > 0) {
+                                const file = e.target.files[0];
+                                if (file.type.match('image.*')) {
+                                    const reader = new FileReader();
+
+                                    reader.onload = function(e) {
+                                        previewImage.src = e.target.result;
+                                        imagePreview.classList.remove('hidden');
+                                    }
+
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+                        });
+
+                        removeImage.addEventListener('click', function() {
+                            imageUpload.value = '';
+                            imagePreview.classList.add('hidden');
+                            previewImage.src = '#';
+                        });
+                    });
 </script>
