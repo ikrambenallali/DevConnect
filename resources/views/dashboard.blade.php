@@ -5,14 +5,25 @@
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-4">
                     <div class="text-2xl font-bold text-blue-400">&lt;DevConnect/&gt;</div>
-                    <div class="relative">
-                        <input type="text"
-                            placeholder="Search developers, posts, or #tags"
-                            class="bg-gray-800 pl-10 pr-4 py-2 rounded-lg w-96 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700 transition-all duration-200">
-                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                    <div class="container mx-auto mt-5 px-4">
+                    <div class="flex flex-row gap-6 items-center">
+                        <!-- Barre de recherche -->
+                        <div class="relative">
+                            <input type="text" id="search_text"
+                                class="bg-gray-800 pl-10 pr-4 py-2 rounded-lg w-96 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700 transition-all duration-200"
+                                placeholder="Rechercher un post ou un utilisateur...(tags)">
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <div id="result"
+                                class="absolute w-full mt-2 bg-black border border-gray-200 rounded-lg shadow-lg z-10 hidden">
+                                <!-- Résultats de la recherche -->
+                            </div>
+                        </div>
                     </div>
+                </div>
                 </div>
 
                 <div class="flex items-center space-x-6">
@@ -501,121 +512,62 @@
                                 postId
                             }
                             /like`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        onst removeImage = document.getElementById('remove-image');
-
-                        imageUpload.addEventListener('change', function(e) {
-                            if (e.target.files.length > 0) {
-                                const file = e.target.files[0];
-                                if (file.type.match('image.*')) {
-                                    const reader = new FileReader();
-
-                                    reader.onload = function(e) {
-                                        previewImage.src = e.target.result;
-                                        imagePreview.classList.remove('hidden');
-                                    }
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }
-                        });
-
-                        removeImage.addEventListener('click', function() {
-                            imageUpload.value = '';
-                            imagePreview.classList.add('hidden');
-                            previewImage.src = '#';
-                        });
-                    });
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                const likeButton = document.getElementById(`like-button-${postId}`);
+                const likeCount = likeButton.querySelector('span');
+                likeCount.textContent = data.count + (data.count !== 1 ? ' Likes' : ' Like');
+                // likeButton.classList.add('text-blue-500');
+
+
+                if (data.liked) {
+                    likeButton.classList.add('text-blue-500');
+                    likeButton.classList.remove('text-gray-400');
+                } else {
+                    likeButton.classList.add('text-gray-400');
+                    likeButton.classList.remove('text-blue-500');
+                }
+            });
+    }
+     // Add Post Form
+     const addpostButton = document.getElementById('addpostButton');
+    const addpostform = document.getElementById('addpostform');
+    addpostButton.addEventListener('click', function() {
+        addpostform.classList.remove('hidden')
+    })
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const previewImage = document.getElementById('preview-image');
+        const removeImage = document.getElementById('remove-image');
+
+        imageUpload.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                if (file.type.match('image.*')) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        removeImage.addEventListener('click', function() {
+            imageUpload.value = '';
+            imagePreview.classList.add('hidden');
+            previewImage.src = '#';
+        });
+    });
 </script>

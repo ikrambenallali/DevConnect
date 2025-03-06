@@ -6,6 +6,7 @@ use App\Models\Competence;
 use App\Models\Connection;
 use App\Models\language_programmation;
 use App\Models\Post;
+use App\Models\Projet;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -134,11 +135,17 @@ class PostController extends Controller
     }
     public function profil($id)
     {
+        $posts = Post::where('user_id', auth()->id())->get();
+
+        $certfications = Competence::where('user_id', $id)->get();
+
+        $projets = Projet::where('user_id', $id)->get();
+
         $user = User::findOrFail($id);  // Récupère l'utilisateur par son ID
         $languageProgs = language_programmation::where('user_id', $id)->get();
         $competences = Competence::where('user_id', $id)->get(); // Assurez-vous que la variable $competences est aussi envoyée
     
-        return view('profil', compact('user', 'languageProgs', 'competences'));
+        return view('profil', compact('user', 'languageProgs', 'competences', 'projets', 'certfications', 'posts'));
     }
     
     
