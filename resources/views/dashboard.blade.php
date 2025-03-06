@@ -505,38 +505,97 @@
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                const likeButton = document.getElementById(`like-button-${postId}`);
-                const likeCount = likeButton.querySelector('span');
-                likeCount.textContent = data.count + (data.count !== 1 ? ' Likes' : ' Like');
-                // likeButton.classList.add('text-blue-500');
-
-
-                if (data.liked) {
-                    likeButton.classList.add('text-blue-500');
-                    likeButton.classList.remove('text-gray-400');
-                } else {
-                    likeButton.classList.add('text-gray-400');
-                    likeButton.classList.remove('text-blue-500');
-                }
-            });
-    }
-    // Add Post Form
-    const addpostButton = document.getElementById('addpostButton');
-    const addpostform = document.getElementById('addpostform');
-    addpostButton.addEventListener('click', function() {
-        addpostform.classList.remove('hidden')
-    })
-    document.addEventListener('DOMContentLoaded', function() {
-        const imageUpload = document.getElementById('image-upload');
-        const imagePreview = document.getElementById('image-preview');
-        const previewImage = document.getElementById('preview-image');
-        const removeImage = document.getElementById('remove-image');
+   
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    onst removeImage = document.getElementById('remove-image');
 
         imageUpload.addEventListener('change', function(e) {
             if (e.target.files.length > 0) {

@@ -10,6 +10,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
+use App\Notifications\CommentNotification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +25,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/test', [CommantaireController::class, 'test']);
+
+Route::view('notif', 'notif');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -64,12 +67,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/updatePost/{post}', [PostController::class, 'update'])->name('updatePost');
     Route::delete('/dashboard/{post}', [PostController::class, 'destroy'])->name('dashboard.destroy');
     Route::patch('/profile/update', [ProfileController::class, 'updateProfilePicture'])->name('profile.update');
-
-    
-
-    
-
-
 });
 Route::middleware('api')->group(function () {
     Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->name('posts.like');
@@ -79,4 +76,3 @@ Route::get('/connections', [ConnectionController::class, 'index'])->middleware('
 Route::get('/posts', [PostController::class, 'mesPosts'])->middleware('auth')->name('posts');
 
 require __DIR__ . '/auth.php';
-    
