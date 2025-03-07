@@ -47,6 +47,12 @@ class CompetenceController extends Controller
         $competences = Competence::where('user_id', $id)->get();
         return view('profile.edit', compact('competences'));
     }
+    // public function showw(string $id)
+    // {
+
+    //     $competences = Competence::where('user_id', $id)->get();
+    //     return view('profil', compact('competences'));
+    // }
 
 
     /**
