@@ -570,4 +570,92 @@
             previewImage.src = '#';
         });
     });
+
+    // Attacher un événement keyup sur le champ de recherche pour détecter quand l'utilisateur appuie sur Entrée
+    $('#search_text').on('keyup', function(event) {
+        if (event.key === 'Enter') {
+            let query = $(this).val().trim()
+
+            if (query.length > 0) {
+                // Rediriger l'utilisateur vers la page posts.show avec la recherche incluse dans l'URL
+                window.location.href = `/posts/show?query=${encodeURIComponent(query)}`;
+            } else {
+                console.log('Veuillez entrer un terme de recherche.');
+            }
+        }
+    });
+
+
+    function search_data(search_value) {
+        let postsUrl = '/searchPosts?query=' + encodeURIComponent(search_value);
+        let usersUrl = '/searchUsers?query=' + encodeURIComponent(search_value);
+
+        // Recherche des posts
+        $.ajax({
+            url: postsUrl,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                let resultDiv = $("#result");
+                resultDiv.empty(); // Vide la section avant de rajouter les résultats
+
+                console.log(response); // Ajoutez ceci pour vérifier le contenu
+
+                if (response.success) {
+                    response.posts.forEach(function(post) {
+                        let userProfilePicture = post.user && post.user.profile_picture ? post.user
+                            .profile_picture : '/images/placeholder.jpg';
+
+                        let postHTML = `
+                <div class="post-item p-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-4">
+                    <img src="${userProfilePicture}" alt="Profile Picture" class="w-10 h-10 rounded-full">
+                    <a href="/posts/${post.id}" class="text-blue-500 hover:text-blue-700">
+                        <h3 class="font-semibold">${post.title}</h3>
+                    </a>
+                </div>
+            `;
+                        resultDiv.append(postHTML);
+                    });
+                }
+
+                resultDiv.removeClass('hidden'); // Affiche les résultats
+            },
+
+            error: function(error) {
+                console.error("Erreur lors de la recherche des posts :", error);
+            }
+        });
+
+        // Recherche des utilisateurs
+        $.ajax({
+            url: usersUrl,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response)
+                let resultDiv = $("#result");
+                resultDiv.empty(); // Vide la section avant de rajouter les résultats
+
+                if (response.success) {
+                    response.users.forEach(function(user) {
+                        let userHTML = `
+                            <div class="user-item p-2 hover:bg-gray-100 cursor-pointer">${user.name} (${user.email})</div>
+                        `;
+                        resultDiv.append(userHTML);
+                    });
+                }
+
+                resultDiv.removeClass('hidden'); // Affiche les résultats
+            },
+            error: function(error) {
+                console.error("Erreur lors de la recherche des utilisateurs :", error);
+            }
+        });
+    }
+
+    // Écouter la saisie dans la barre de recherche
+    $('#search_text').on('input', function() {
+        let searchValue = $(this).val();
+        search_data(searchValue); // Appelle la fonction de recherche
+    });
 </script>
