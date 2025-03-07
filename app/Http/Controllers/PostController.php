@@ -153,4 +153,16 @@ class PostController extends Controller
     {
         return view('profile.edit', ["user" => $user]);
     }
+    public function afficher(Request $request)
+    {
+        $query = $request->query('query');
+
+        // Recherche des utilisateurs
+        $users = User::where('name', 'like', '%' . $query . '%')->get();
+
+        // Recherche des posts
+        $posts = Post::where('titre', 'like', '%' . $query . '%')->get();
+
+        return view('recherche', compact('users', 'posts'));
+    }
 }

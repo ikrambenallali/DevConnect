@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <nav class="fixed top-0 w-full bg-gray-900 text-white z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
@@ -60,9 +59,11 @@
             </div>
         </div>
     </nav>
+    <!-- <h2>hi ikram </h2> -->
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto pt-20 px-4">
+    <!-- <h2>hi ikram </h2> -->
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <!-- Profile Card -->
 

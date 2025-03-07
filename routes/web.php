@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     //Route pour search 
     Route::get('/searchPosts', [PostController::class, 'searchPosts']);
     Route::get('/searchUsers', [PostController::class, 'searchUsers']);
-    Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('/posts/{id}', [PostController::class, 'afficher'])->name('posts.show');
 
     Route::get('/profilPosts', [PostController::class, 'show'])->name('profilPosts');
     Route::get('/profile.edit', [PostController::class, 'ediit'])->name('profile.edit');
