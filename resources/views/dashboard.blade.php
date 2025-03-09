@@ -137,6 +137,11 @@
                         </div>
                     </div>
                 </div>
+                <!-- demande de connections -->
+                <div class="bg-white rounded-xl shadow-sm p-4">
+                    <a href="{{ route('demandes')}}" class="font-semibold mb-4">demandes Connections</a>
+                   
+                </div>
                 <!--add competence-->
 
             </div>
@@ -507,7 +512,25 @@
             console.error('Error Connecting:', error);
         }
     }
-
+// Accept Connection
+function acceptConnection(connectionId) {
+    fetch(`/connection/${connectionId}/accept`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Connection accepted') {
+                removeElementWithHr(`request-${connectionId}`);
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
     function likePost(postId) {
         fetch(`/posts/${ 
                                 postId

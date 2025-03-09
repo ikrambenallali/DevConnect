@@ -30,6 +30,7 @@ Route::get('/test', [CommantaireController::class, 'test']);
 
 Route::view('notif', 'notif');
 
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -74,6 +75,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/updatePost/{post}', [PostController::class, 'update'])->name('updatePost');
     Route::delete('/dashboard/{post}', [PostController::class, 'destroy'])->name('dashboard.destroy');
     Route::patch('/profile/update', [ProfileController::class, 'updateProfilePicture'])->name('profile.update');
+    // Route::get('/accepter', [ConnectionController::class, 'mesDemandes'])->name('accepter');
+    Route::get('/demandes', [ConnectionController::class, 'showDemande'])->name('demandes');
+    Route::post('/accepterConnection/{connectionId}', [ConnectionController::class, 'accept'])->name('accepterConnection');
+    Route::post('/refuserConnection/{connectionId}', [ConnectionController::class, 'reject'])->name('refuserConnection');
+
+
 });
 Route::middleware('api')->group(function () {
     Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->name('posts.like');
